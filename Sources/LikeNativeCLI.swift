@@ -1,3 +1,4 @@
+import AppKit
 import ArgumentParser
 import Foundation
 import OpenAI
@@ -16,20 +17,28 @@ let promptTemplate = """
 @main
 @available(macOS 12, *)
 struct LikeNative: AsyncParsableCommand {
-    @Argument var input: String
     @Option var lang: String = "French"
 
     mutating func run() async throws {
-        let token = ProcessInfo.processInfo.environment["OPENAI_API_KEY"]!
-        let openAI = OpenAI(apiToken: token)
+        let pasteboard = NSPasteboard.general
+        if let input = pasteboard.string(forType: .string) {
+            let token = ProcessInfo.processInfo.environment["OPENAI_API_KEY"]!
+            let openAI = OpenAI(apiToken: token)
 
-        let prompt = String(format: promptTemplate, self.lang, self.lang, self.lang)
-        let query = ChatQuery(
-            messages: [
-                .init(role: .system, content: prompt)!,
-                .init(role: .user, content: self.input)!,
-            ], model: .gpt4)
-        let result = try await openAI.chats(query: query)
-        print(result.choices[0].message.content!.string!)
+            let prompt = String(format: promptTemplate, self.lang, self.lang, self.lang)
+            let query = ChatQuery(
+                messages: [
+                    .init(role: .system, content: prompt)!,
+                    .init(role: .user, content: input)!,
+                ], model: .gpt4)
+            let result = try await openAI.chats(query: query)
+            let output = result.choices[0].message.content!.string!
+            pasteboard.clearContents()
+            pasteboard.setString(output, forType: .string)
+            print(output)
+            print("\n--\nAbove output is now in the pasteboard")
+        } else {
+            print("Nothing in the pasteboard")
+        }
     }
 }
