@@ -35,7 +35,7 @@ incur by using the tool with your token.
 The application is a command line tool. When run, it replaces the text in the
 clipboard with a corrected version.
 
-For instance, to execute from the command line directly from the source directory:
+For instance, to execute in the command line directly from the source directory:
 
     swift run LikeNativeCLI --lang LANG
 
@@ -81,6 +81,11 @@ bar, and then disappear once the text is corrected.
 Beware that this tool uses the "GPT-4o mini" model and can make mistakes, such
 as providing inconsistent responses or refusing to correct the text. In this
 case, you will receive the tool's output back to the clipboard.
+
+### Tutor mode
+
+Pass the `--tutor` flag to enable "Tutor" mode. In this case, the tool will
+provide an explanation of the changes made to the source text.
 
 ## Implementation. Prompt engineering.
 
