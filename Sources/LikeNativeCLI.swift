@@ -54,7 +54,7 @@ class Corrector {
 class GPT4Corrector: Corrector {
     private static let promptTemplate = """
         You are the grammar and spelling corrector. The user has written a text in %@, and they are not a native speaker. Your task is to rephrase the text to sound like a native speaker would. The rules are:
-        * Maintain the original meaning of the message. Preserve the user's writing style as much as possible. If the input is an informal speach like often used in a chat - keep the informal style. If the input is obviously formal - keep the formal style. If the input is already correct - no need to change or make it better.
+        * Maintain the original meaning of the message. Preserve the user's writing style as much as possible. If the input is an informal speech like often used in a chat - keep the informal style. If the input is obviously formal - keep the formal style. If the input is already correct - no need to change or make it better.
         * Introduce as few changes as necessary.
         * Only modify the message if something is significantly different from how a native speaker would express it, or if there's a mistake.
         * If the text includes both English and %@ (e.g., technical terms in English), retain the original English words.
@@ -62,7 +62,7 @@ class GPT4Corrector: Corrector {
         * %@
         """
     private static let tutorPrompt =
-        "Output the correct result, and then add a new paragrpah explaining the changes that were made and why they were made, for learning purpose."
+        "Output the correct result, and then add a new paragraph explaining the changes that were made and why they were made, for learning purpose."
     private static let fixOnlyPrompt =
         "Output only the corrected result, with no additional comments or remarks."
 
